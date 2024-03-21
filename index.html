@@ -1,0 +1,97 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+
+    <style>
+        form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px; 
+            width: 500px; 
+            margin: 0 auto; 
+        }
+
+        h1, h2, label {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+        
+        input[type="text"], textarea {
+            border: 1px solid #ccc; 
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 100%; 
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px;
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Postech Fullstack</h1>
+    <h2>Desafio aula inaugural</h2>
+    <br>
+    
+    <form id="techform">
+      <h2>Informações do grupo</h2>
+      <label for="nome1">Nome</label>
+      <input type="text" id="nome1" name="nome">
+      <br><br>
+      <label for="nome2">Nome</label>
+      <input type="text" id="nome2" name="nome">
+      <br><br>
+      <label for="nome3">Nome</label>
+      <input type="text" id="nome3" name="nome">
+      <br><br>
+      <label for="nome4">Nome</label>
+      <input type="text" id="nome4" name="nome">
+      <br><br>
+      <label for="nome5">Nome</label>
+      <input type="text" id="nome5" name="nome">
+      <br><br>
+      <label for="historia">História do grupo</label>
+      <textarea id="historia" name="historia"></textarea>
+      <br><br>
+      <input type="submit" value="Enviar">
+    </form>
+
+    <script type="text/javascript">
+        const form = document.getElementById('techform');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const names = [
+                document.getElementById('nome1').value,
+                document.getElementById('nome2').value,
+                document.getElementById('nome3').value,
+                document.getElementById('nome4').value,
+                document.getElementById('nome5').value
+            ].filter(el => !!el);
+            const message = document.getElementById('historia').value;
+
+            fetch('https://fsdt-contact-acf4ab9867a7.herokuapp.com/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    names,
+                    message
+                })
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                console.log(data);
+            });
+        });
+    </script>
+</body>
+</html>
