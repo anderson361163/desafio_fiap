@@ -39,7 +39,7 @@
     <h2>Desafio aula inaugural</h2>
     <br>
     
-    <form id="techform" onsubmit="submit()">
+    <form id="techform">
       <h2>Informações do grupo</h2>
       <label for="nome1">Nome</label>
       <input type="text" id="nome1" name="nome">
@@ -63,7 +63,35 @@
     </form>
 
     <script type="text/javascript">
-        
+        const form = document.getElementById('techform');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const names = [
+                document.getElementById('nome1').value,
+                document.getElementById('nome2').value,
+                document.getElementById('nome3').value,
+                document.getElementById('nome4').value,
+                document.getElementById('nome5').value
+            ].filter(el => !!el);
+            const message = document.getElementById('historia').value;
+
+            fetch('https://fsdt-contact-acf4ab9867a7.herokuapp.com/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    names,
+                    message
+                })
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                console.log(data);
+            });
+        });
     </script>
 </body>
 </html>
